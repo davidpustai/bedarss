@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+	<channel>
+		<title>Jak to vidí Béďa</title>
+		<link>https://bedarss.djvesko.com</link>
+		<description>pár zpráv a názorů z Pardubic</description>
+		<language>cs</language>
+		<webMaster>david@pustai.cz</webMaster>
+		<docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+		<ttl>1440</ttl>
+		<% @items.each do |item| %>
+			<item>
+				<description><%= item.inner_html.encode("UTF-8", "Windows-1250") %></description>
+			</item>
+		<% end -%>
+	</channel>
+</rss>
