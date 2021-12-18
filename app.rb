@@ -9,7 +9,7 @@ end
 
 class BedarssApp < Sinatra::Base
   get "/" do
-    document = Nokogiri::HTML.parse(open("http://lpu.cz/beda/"))
+    document = Nokogiri::HTML.parse(URI.open("http://lpu.cz/beda/"))
     document.xpath("//comment()").remove
     document.css("br").remove
     @items = document.css("li")
