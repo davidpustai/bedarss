@@ -30,7 +30,7 @@ PLATFORMS
 DEPENDENCIES
   nokogiri (~> 1.12.5)
   sinatra (~> 2.1.0)
-  sinatra-contrib
+  sinatra-contrib (~> 2.1.0)
 
 BUNDLED WITH
    2.2.33
