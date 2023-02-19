@@ -1,12 +1,10 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    mini_portile2 (2.6.1)
     multi_json (1.15.0)
     mustermann (1.1.2)
       ruby2_keywords (~> 0.0.1)
-    nokogiri (1.12.5)
-      mini_portile2 (~> 2.6.1)
+    nokogiri (1.13.10-x86_64-linux)
       racc (~> 1.4)
     racc (1.6.2)
     rack (2.2.6.2)
@@ -30,7 +28,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  nokogiri (~> 1.12.5)
+  nokogiri (~> 1.13.10)
   sinatra (~> 2.1.0)
   sinatra-contrib (~> 2.1.0)
 
