@@ -1,6 +1,6 @@
 # Beďarss
 
-[Beďary pro všechny!](https://bedarss.djvesko.com/)
+[Beďary pro všechny!](https://djvesko.com/bedarss)
 
 ## Depdendencies
 - [Ruby](https://www.ruby-lang.org/en/)
