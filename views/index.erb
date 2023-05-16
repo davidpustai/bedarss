@@ -10,7 +10,7 @@
 		<ttl>1440</ttl>
 		<% @items.each do |item| %>
 			<item>
-				<description><%= item.inner_html.encode("UTF-8", "Windows-1250") %></description>
+				<description><%= item.inner_html %></description>
 			</item>
 		<% end %>
 	</channel>
