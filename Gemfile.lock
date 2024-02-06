@@ -3,9 +3,9 @@ GEM
   specs:
     mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
-    nokogiri (1.15.0-x86_64-linux)
+    nokogiri (1.16.2-x86_64-linux)
       racc (~> 1.4)
-    racc (1.6.2)
+    racc (1.7.3)
     rack (2.2.7)
     rack-protection (3.0.6)
       rack
@@ -22,7 +22,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  nokogiri (~> 1.15)
+  nokogiri (~> 1.16)
   rack-unreloader (~> 2.1.0)
   sinatra (~> 3.0.5)
 
