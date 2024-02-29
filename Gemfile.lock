@@ -6,7 +6,7 @@ GEM
     nokogiri (1.15.0-x86_64-linux)
       racc (~> 1.4)
     racc (1.6.2)
-    rack (2.2.7)
+    rack (2.2.8.1)
     rack-protection (3.0.6)
       rack
     rack-unreloader (2.1.0)
