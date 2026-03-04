@@ -8,22 +8,6 @@ function escapeXml(str) {
     .replace(/"/g, '&quot;');
 }
 
-function parsePageTimestamp($) {
-  const raw = $('div.akt').first().text().trim();
-  // e.g. "út 03. 03. 08:41"
-  const parts = raw.split(/\s+/);
-  const year = new Date().getFullYear();
-  let date = '';
-  let time = '';
-  if (parts.length >= 4) {
-    const day = parts[1].replace('.', '').padStart(2, '0');
-    const month = parts[2].replace('.', '').padStart(2, '0');
-    date = `${day}.${month}.${year}`;
-    time = parts[3] || '';
-  }
-  return { date, time };
-}
-
 function toRfc822(date, time) {
   // date: "DD.MM.YYYY", time: "HH:MM"
   if (!date) return '';
@@ -91,7 +75,6 @@ function parseNovinky($) {
 
 function parseMainSections($) {
   const items = [];
-  const { date, time } = parsePageTimestamp($);
 
   $('div.nadpis').each((_, el) => {
     const section = $(el).text().trim();
@@ -118,7 +101,7 @@ function parseMainSections($) {
       const description = liEl.text().trim();
 
       if (title) {
-        items.push({ section, title, link, date, time, description });
+        items.push({ section, title, link, description });
       }
     });
   });
@@ -127,52 +110,51 @@ function parseMainSections($) {
 }
 
 export default async function handler(req, res) {
-  const sourceUrl = 'https://lpu.cz/beda/';
+  const SOURCE_URL = 'https://lpu.cz/beda/';
+  const timeout = setTimeout(() => controller.abort(), 5000);
   let html;
 
   try {
-    const response = await fetch(sourceUrl, {
-      headers: { 'User-Agent': 'bedarss/1.0' },
+    const res = await fetch(SOURCE_URL, {
+      signal: controller.signal
     });
-    html = await response.text();
+    clearTimeout(timeout);
+    html = await res.text();
   } catch (err) {
     res.status(502).send('Failed to fetch source: ' + err.message);
     return;
   }
 
   const $ = cheerio.load(html, { decodeEntities: false });
-  const { date: pageDate, time: pageTime } = parsePageTimestamp($);
 
   const novinky = parseNovinky($);
   const main = parseMainSections($);
   const allItems = [...novinky, ...main];
 
   let itemXml = '';
-  allItems.forEach((item, i) => {
-    const link = item.link || `https://lpu.cz/beda/#item-${i}`;
-    const guid = link;
+  allItems.forEach((item) => {
     const description = item.description || item.title;
     const pubDate = toRfc822(item.date, item.time);
 
     itemXml += `    <item>\n`;
     itemXml += `      <description><![CDATA[[${escapeXml(item.section)}] ${description}]]></description>\n`;
-    itemXml += `      <guid isPermaLink="false">${escapeXml(guid)}</guid>\n`;
     if (pubDate) {
       itemXml += `      <pubDate>${pubDate}</pubDate>\n`;
     }
     itemXml += `    </item>\n`;
   });
 
-  const lastBuild = toRfc822(pageDate, pageTime);
-
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
-    <title>beda.lpu.cz</title>
-    <link>${sourceUrl}</link>
-    <description>Orienteering news aggregator — lpu.cz/beda/</description>
-    <language>cs</language>${lastBuild ? `\n    <lastBuildDate>${lastBuild}</lastBuildDate>` : ''}
-${itemXml}  </channel>
+    <title>Jak to vidí Béďa</title>
+    <link>${SOURCE_URL}</link>
+    <description>pár zpráv a názorů z Pardubic</description>
+    <language>cs</language>
+    <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+    <ttl>1440</ttl>
+    ${itemXml}
+  </channel>
 </rss>`;
 
   res.setHeader('Content-Type', 'application/rss+xml; charset=utf-8');
