@@ -98,7 +98,14 @@ function parseMainSections($) {
         link = 'https://lpu.cz' + (link.startsWith('/') ? '' : '/') + link;
       }
 
-      const description = liEl.text().trim();
+      liEl.find('a[href]').each((_, a) => {
+        const aEl = $(a);
+        let href = aEl.attr('href') || '';
+        if (href && !href.startsWith('http')) {
+          aEl.attr('href', 'https://lpu.cz' + (href.startsWith('/') ? '' : '/') + href);
+        }
+      });
+      const description = liEl.html().trim();
 
       if (title) {
         items.push({ section, title, link, description });
