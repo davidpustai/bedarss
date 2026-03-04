@@ -111,6 +111,7 @@ function parseMainSections($) {
 
 export default async function handler(req, res) {
   const SOURCE_URL = 'https://lpu.cz/beda/';
+  const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 5000);
   let html;
 
