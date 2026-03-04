@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:lpu.cz)",
+      "Bash(curl -s \"https://lpu.cz/beda/\" 2>/dev/null | head -200)",
+      "Bash(curl -s \"https://lpu.cz/beda/\" 2>/dev/null | sed -n '200,500p')",
+      "Bash(curl -s \"https://lpu.cz/beda/\" 2>/dev/null | grep -n \"novinky_datum\\\\|novinky_text\\\\|nadpis\\\\|<a name\\\\|id=\\\\\"cr\\\\|id=\\\\\"vc\\\\|id=\\\\\"pce\\\\|id=\\\\\"svet\\\\|anchor\\\\|#cr\\\\|#vc\\\\|#pce\\\\|#svet\" | head -80)",
+      "Bash(curl -s \"https://lpu.cz/beda/\" 2>/dev/null | wc -l && echo \"---total lines---\" && curl -s \"https://lpu.cz/beda/\" 2>/dev/null | grep -c \"novinky_datum\\\\|novinky_text\")",
+      "Bash(curl -s \"https://lpu.cz/beda/\" 2>/dev/null | sed -n '610,770p')",
+      "Bash(curl -s \"https://lpu.cz/beda/\" 2>/dev/null | sed -n '580,620p')",
+      "Bash(curl -s \"https://lpu.cz/beda/\" 2>/dev/null | grep -n \"<TD\\\\|<TR\\\\|class=nadpis\\\\|<a name\\\\|name=cr\\\\|name=vc\\\\|name=pce\\\\|name=svet\\\\|NOVINKY\\\\|ČESKÁ\\\\|VÝCHODNÍ\\\\|PARDUBICE\\\\|SVĚT\" | head -40)",
+      "Bash(curl -s \"https://lpu.cz/beda/\" 2>/dev/null | sed -n '148,175p')",
+      "Bash(curl -s \"https://lpu.cz/beda/\" 2>/dev/null | sed -n '538,560p')",
+      "Bash(curl -s \"https://lpu.cz/beda/\" 2>/dev/null | grep -n \"VPRAVO\\\\|vlevo\\\\|novinky\\\\|<TD ALIGN\" | head -20)",
+      "Bash(node -e \"const v = process.version; console.log\\(v\\); const m = parseInt\\(v.slice\\(1\\)\\); console.log\\('fetch available:', m >= 18\\);\")",
+      "Bash(curl -s \"https://lpu.cz/beda/\" 2>/dev/null | grep -n \"VPRAVO\\\\|<!-- ---\" | head -20)",
+      "Bash(npm show cheerio version 2>/dev/null && npm show cheerio description 2>/dev/null)",
+      "Bash(pnpm install 2>&1)"
+    ]
+  }
+}
