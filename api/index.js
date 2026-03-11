@@ -145,7 +145,7 @@ export default async function handler(req, res) {
     const pubDate = toRfc822(item.date, item.time);
 
     itemXml += `    <item>\n`;
-    itemXml += `      <description><![CDATA[[${escapeXml(item.section)}] ${description}]]></description>\n`;
+    itemXml += `      <description><![CDATA[${description}]]></description>\n`;
     if (pubDate) {
       itemXml += `      <pubDate>${pubDate}</pubDate>\n`;
     }
